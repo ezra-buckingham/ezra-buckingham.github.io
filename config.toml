@@ -1,0 +1,33 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Ezra Buckingham'
+theme = 'hugo-theme-codex'
+
+[params]
+    twitter = "https://twitter.com/buckinghamezra"
+    github = "https://github.com/ezra-buckingham"
+    iconOrder = ["Twitter", "GitHub"]
+    showPageTitleInTOC = true
+
+[menu]
+
+[[menu.main]]
+    identifier = "home"
+    name = "home"
+    title = "Home"
+    url = "/"
+    weight = -110
+
+[[menu.main]]
+    identifier = "blog"
+    name = "blog"
+    title = "Blog"
+    url = "/blog"
+    weight = -100
+
+[[menu.main]]
+    identifier = "about-me"
+    name = "about"
+    title = "About Me"
+    url = "/about-me"
+    weight = -90
