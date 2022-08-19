@@ -14,6 +14,12 @@ Ah my favorite topic!
 
 That is a wonderful question!
 
+# Extra Credit
+
+## Docker Compose
+
+
+
 Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
 Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
 Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
