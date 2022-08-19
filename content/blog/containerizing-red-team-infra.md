@@ -5,8 +5,20 @@ draft: true
 slug: ""
 description: "Want to take the dive?"
 keywords: []
-draft: true
 tags: ["red-team", "infrastructure", "docker", "containers"]
 ---
 
-Welcome to the first installment of the Ezra Buckingham blog!
+Ah my favorite topic!
+
+# Why Containerize?
+
+That is a wonderful question!
+
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
+Welcome to the first installment of the Ezra Buckingham blog! All about Red team infra my guy lorem ipsunm
