@@ -23,10 +23,11 @@ params:
   defaultTheme: auto # dark, light
   disableThemeToggle: true
 
-  ShowReadingTime: true
   ShowShareButtons: true
-  ShowPostNavLinks: true
-  ShowBreadCrumbs: true
+  ShareButtons: ["linkedin", "twitter"]
+  ShowReadingTime: true
+  ShowPostNavLinks: false
+  ShowBreadCrumbs: false
   ShowCodeCopyButtons: true
   ShowWordCount: true
   ShowRssButtonInSectionTermList: true
