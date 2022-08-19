@@ -5,12 +5,12 @@ draft: true
 description: "Want to take the dive?"
 keywords: []
 tags: ["red-team", "infrastructure", "docker", "containers"]
-cover:
-    image: "EzraBuckingham.png"
-    alt: "<alt text>"
-    caption: "<text>"
-    relative: true 
-    responsiveImages: true
+# cover:
+#     image: "EzraBuckingham.png"
+#     alt: "<alt text>"
+#     caption: "<text>"
+#     relative: true 
+#     responsiveImages: true
 ---
 
 Ah my favorite topic!

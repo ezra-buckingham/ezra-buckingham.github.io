@@ -15,7 +15,13 @@ hugo --config config.yml server -D
 
 ## Create a New Post
 
+To create a new post, you can use the following command:
 
+```
+hugo new blog/test.md
+```
+
+Note: I use 20 x 5 aspect ratio for picutres. This can be done in Photos.
 
 ## Acknowledgements
 
