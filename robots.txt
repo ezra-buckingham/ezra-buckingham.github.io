@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://ezrabuckingham.com/sitemap.xml
