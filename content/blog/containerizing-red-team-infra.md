@@ -2,7 +2,7 @@
 title: "DevAttackOps: Containerizing Red Team Infrastructure (Part 1)"
 date: 2022-08-19T08:57:43-04:00
 draft: true
-description: "How to build a CI/CD pipeline for your container deployments"
+description: "Containerizing Attack and C2 infrastructure"
 keywords: ["red-team", "infrastructure", "docker", "containers", "devattackops"]
 tags: ["red-team", "infrastructure", "docker", "containers", "devattackops"]
 cover:
@@ -11,6 +11,8 @@ cover:
     relative: true 
     responsiveImages: true
 ---
+
+TLDR: Building containers for Red Team applications is easy, I have included a Cobalt Strike Dockerfile for you in the [Artifacts](#artifacts) section.
 
 So here is my first actual blog post. I am going to talk about how Red Teams can use the same CI/CD pipelines used by developers to both simplify Red Team infrastructure and generally make your life easier. As our European friends say, "Let's get stuck in!"
 
@@ -56,19 +58,23 @@ apt-get install --no-install-recommends -y ca-certificates curl expect git gnupg
 
 Great, now that we have all the required dependencies, we can download the package from their website. Should be a simple `wget` command, right? Well not exactly...
 
-To download Cobalt Strike, go to https://download.cobaltstrike.com/download and enter your license key. You will be redirected to another page where you select your operating system and then download Cobalt Strike. This is a little challenging considering when you enter your license key, you get a "token" that is part of the download URL. In order to capture that token, you can make the initial `GET` request with your license key as a query parameter and use some Bash magic to extract that token.
+To download Cobalt Strike, go to https://download.cobaltstrike.com/download and enter your license key. You will be redirected to another page where you select your operating system and then download Cobalt Strike. This is a little challenging considering when you enter your license key, you get a "token" that is part of the download URL. In order to capture that token, you can make the initial `GET` request with your license key as a query parameter and use some Bash magic to extract that token. In this example, I have set the `COBALTSTRIKE_LICENSE` environment variable which allows me to dynamically reference it in the initial curl request.
+
+```bash
+export COBALTSTRIKE_LICENSE="<cobaltstrike_license"
+```
 
 ```bash
 curl -s https://download.cobaltstrike.com/download -d "dlkey=${COBALTSTRIKE_LICENSE}" | grep 'href="/downloads/' | cut -d '/' -f3
 ```
 
-From that command, we get the token that we need to include in part of the download URL. However, just getting the token does us no good. We need to save the token and use it in a subsequent request. We can do this by exporting the results of the `curl` command above to an environment variable by wrapping that command in `export TOKEN=$(<curl-command>)`.
+From that curl command, we get the token that we need to include in the download URL. However, just getting the token does us no good. We need to save the token and use it in a subsequent request. We can do this by exporting the results of the `curl` command above to an environment variable by wrapping that command in `export TOKEN=$(<curl-command>)`.
 
 ```bash
 export TOKEN=$(curl -s https://download.cobaltstrike.com/download -d "dlkey=${COBALTSTRIKE_LICENSE}" | grep 'href="/downloads/' | cut -d '/' -f3)
 ```
 
-Now that we have the token, all we need to do is make a `wget` to get the <???> and use Bash expansion to expand that token in the `wget` request.
+Now that we have the token, all we need to do is make a `wget` to get the `cobaltstrike-dist.tgz` file and use Bash expansion to expand that token in the `wget` request.
 
 ```bash
 wget https://download.cobaltstrike.com/downloads/${TOKEN}/latest47/cobaltstrike-dist.tgz
@@ -82,15 +88,51 @@ Now that we have the package, we can use `tar` to extract the package.
 tar zxf cobaltstrike-dist.tgz 
 ```
 
-Before we can run the `teamserver`, we need to run the `update` script to license the package we just downloaded. Since the `update` script will expect us to provide the license key via standard input, we can use an `echo` command to give it the key.
+However, before we can run the `teamserver`, we need to run the `update` script to license the package we just downloaded. Since the `update` script will expect us to provide the license key via standard input, we can use an `echo` command to give it the key.
 
 ```bash
 echo ${COBALTSTRIKE_LICENSE} | ./update
 ```
 
-### Converting to a Dockerfile
+## Creating the Dockerfile
 
-Great, now we have a working version of Cobalt Strike installed! Next we want to take all of this and put it into a Dockerfile. Since a Dockerfile can just take and run bash commands, we can take everything we just learned and put it into a Dockerfile. The only difference here is that we will want to pass the Cobalt Strike license as a `build-arg` to the container so that when we run the container, we have a fully licensed version of Cobalt Strike. The way we do this is by defining a `ARG` in the Dockerfile and then pass that `ARG` at build time. Your Dockerfile should look like the example below.
+Great, now we have a working version of Cobalt Strike installed! Next we want to take all of this and put it into a Dockerfile. Since a Dockerfile can just take and run bash commands to setup a container image, we can take everything we just learned and put it into a Dockerfile. To start building our first container, you will want to create a new directory and create a `Dockerfile` inside of the newly created directory.
+
+```bash
+mkdir cobaltstrike
+cd cobaltstrike
+touch Dockerfile
+```
+
+### Using Buildtime Arguments
+
+Using our newly created directory and files,  we now can start building out the Dockerfile. In the example above, I exported the `COBALTSTRIKE_LICENSE` as an environment variable. But how the hell can I mimic that functionality with Docker so I don't need to hardcode my license key into the Dockerfile? This is where buildtime argument come in. Using that buildtime argument, we will want to pass the Cobalt Strike license using the `build-arg` flag so that when we build the container, we have a fully licensed version of Cobalt Strike. The way we do this is by defining a `ARG` in the Dockerfile and then pass that `ARG` at build time. 
+
+```dockerfile
+FROM debian:stable-slim
+
+# Required Arguments
+ARG COBALTSTRIKE_LICENSE
+```
+
+Now we can use that same environment variable called `COBALTSTRIKE_LICENSE` we set earlier to pass in the license key.
+
+```bash
+docker build -t cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE .
+```
+
+### Converting the Manual Commands
+
+### Exposing Ports
+
+### Setting the Entrypoint
+
+### Using the Container
+
+
+
+# Artifacts
+
 
 ```dockerfile
 FROM debian:stable-slim
@@ -124,89 +166,3 @@ ENTRYPOINT ["./teamserver"]
 ```
 
 The build command looks like this.
-
-```bash
-docker build -t cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE .
-```
-
-# Building a CI/CD Pipeline
-
-## Attempt #1 
-
-```yaml
-build:
-  image: docker:19.03.12
-  stage: build
-  services:
-    - docker:19.03.12-dind
-  variables:
-    CI_REGISTRY_PATH: $CI_REGISTRY/5tag3/terry-container-registry
-    COBALTSTRIKE_LICENSE: $COBALTSTRIKE_LICENSE
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - docker build -t $CI_REGISTRY_PATH/cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE ./cobaltstrike
-    - docker push $CI_REGISTRY_PATH/cobaltstrike:latest
-    - docker build -t $CI_REGISTRY_PATH/deimos:latest ./deimos
-    - docker push $CI_REGISTRY_PATH/deimos:latest
-    - docker build -t $CI_REGISTRY_PATH/gophish:latest ./gophish
-    - docker push $CI_REGISTRY_PATH/gophish:latest
-    - docker build -t $CI_REGISTRY_PATH/sliver:latest ./sliver
-    - docker push $CI_REGISTRY_PATH/sliver:latest
-```
-
-## Attempt #2
-
-```yaml
-image: docker:19.03.12
-
-stages:
-  - build
-
-# Global Job Config for all container builds (include build arg variables here)
-.job_configuration_template: &job_configuration
-  stage: build
-  services:
-    - docker:19.03.12-dind
-  variables:
-    CI_REGISTRY_PATH: $CI_REGISTRY/5tag3/terry-container-registry
-    COBALTSTRIKE_LICENSE: $COBALTSTRIKE_LICENSE
-  before_script: 
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-
-# Actual Builds
-build_cobaltstrike:
-  <<: *job_configuration
-  script:
-    - docker build -t $CI_REGISTRY_PATH/cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE ./cobaltstrike
-    - docker push $CI_REGISTRY_PATH/cobaltstrike:latest
-
-build_deimos:
-  <<: *job_configuration
-  script:
-    - docker build -t $CI_REGISTRY_PATH/deimos:latest ./deimos
-    - docker push $CI_REGISTRY_PATH/deimos:latest
-
-build_sliver:
-  <<: *job_configuration
-  script:
-    - docker build -t $CI_REGISTRY_PATH/sliver:latest ./sliver
-    - docker push $CI_REGISTRY_PATH/sliver:latest
-
-build_gophish:
-  <<: *job_configuration
-  script:
-    - docker build -t $CI_REGISTRY_PATH/gophish:latest ./gophish
-    - docker push $CI_REGISTRY_PATH/gophish:latest
-
-build_evilginx2:
-  <<: *job_configuration
-  script:
-    - docker build -t $CI_REGISTRY_PATH/evilginx2:latest ./evilginx2
-    - docker push $CI_REGISTRY_PATH/evilginx2:latest
-
-```
-
-# Extra Credit
-
-## Docker Compose
