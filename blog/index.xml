@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Blogs on Ezra Buckingham</title>
-    <link>https://ezra-buckingham.github.io/blog/</link>
+    <link>https://ezrabuckingham.com/blog/</link>
     <description>Recent content in Blogs on Ezra Buckingham</description>
     <image>
-      <url>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://ezrabuckingham.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ezrabuckingham.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezra-buckingham.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezrabuckingham.com/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DevAttackOps: Containerizing Red Team Infrastructure (Part 1)</title>
-      <link>https://ezra-buckingham.github.io/blog/containerizing-red-team-infra/</link>
+      <link>https://ezrabuckingham.com/blog/containerizing-red-team-infra/</link>
       <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
       
-      <guid>https://ezra-buckingham.github.io/blog/containerizing-red-team-infra/</guid>
+      <guid>https://ezrabuckingham.com/blog/containerizing-red-team-infra/</guid>
       <description>Containerizing Attack and C2 infrastructure</description>
     </item>
     
     <item>
       <title>Welcome to the Blog!</title>
-      <link>https://ezra-buckingham.github.io/blog/welcome-to-the-blog/</link>
+      <link>https://ezrabuckingham.com/blog/welcome-to-the-blog/</link>
       <pubDate>Thu, 18 Aug 2022 08:57:43 -0400</pubDate>
       
-      <guid>https://ezra-buckingham.github.io/blog/welcome-to-the-blog/</guid>
+      <guid>https://ezrabuckingham.com/blog/welcome-to-the-blog/</guid>
       <description>Out of demand, I have decided to create my own blog where I post about all the research I do!</description>
     </item>
     
