@@ -3,10 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ezra-buckingham.github.io/</loc>
-    <lastmod>2022-08-18T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
   </url><url>
     <loc>https://ezra-buckingham.github.io/blog/</loc>
-    <lastmod>2022-08-18T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/tags/containers/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/tags/devattackops/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/blog/containerizing-red-team-infra/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/tags/docker/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/tags/infrastructure/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/tags/red-team/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+  </url><url>
+    <loc>https://ezra-buckingham.github.io/tags/</loc>
+    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
   </url><url>
     <loc>https://ezra-buckingham.github.io/blog/welcome-to-the-blog/</loc>
     <lastmod>2022-08-18T08:57:43-04:00</lastmod>
@@ -16,7 +37,5 @@
     <loc>https://ezra-buckingham.github.io/categories/</loc>
   </url><url>
     <loc>https://ezra-buckingham.github.io/search/</loc>
-  </url><url>
-    <loc>https://ezra-buckingham.github.io/tags/</loc>
   </url>
 </urlset>

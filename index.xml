@@ -9,7 +9,16 @@
       <link>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 18 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezra-buckingham.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezra-buckingham.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DevAttackOps: Containerizing Red Team Infrastructure (Part 1)</title>
+      <link>https://ezra-buckingham.github.io/blog/containerizing-red-team-infra/</link>
+      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      
+      <guid>https://ezra-buckingham.github.io/blog/containerizing-red-team-infra/</guid>
+      <description>Containerizing Attack and C2 infrastructure</description>
+    </item>
+    
     <item>
       <title>Welcome to the Blog!</title>
       <link>https://ezra-buckingham.github.io/blog/welcome-to-the-blog/</link>

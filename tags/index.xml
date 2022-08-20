@@ -8,6 +8,52 @@
       <url>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://ezra-buckingham.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 19 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezra-buckingham.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>containers</title>
+      <link>https://ezra-buckingham.github.io/tags/containers/</link>
+      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      
+      <guid>https://ezra-buckingham.github.io/tags/containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devattackops</title>
+      <link>https://ezra-buckingham.github.io/tags/devattackops/</link>
+      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      
+      <guid>https://ezra-buckingham.github.io/tags/devattackops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://ezra-buckingham.github.io/tags/docker/</link>
+      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      
+      <guid>https://ezra-buckingham.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>infrastructure</title>
+      <link>https://ezra-buckingham.github.io/tags/infrastructure/</link>
+      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      
+      <guid>https://ezra-buckingham.github.io/tags/infrastructure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>red-team</title>
+      <link>https://ezra-buckingham.github.io/tags/red-team/</link>
+      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      
+      <guid>https://ezra-buckingham.github.io/tags/red-team/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
