@@ -220,7 +220,7 @@ And with that Dockerfile in our `cobaltstrike` directory, we can now build the c
 docker build -t cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE .
 ```
 
-### Using the Container (without a Malleable C2 Profile)
+## Using the Container (without a Malleable C2 Profile)
 
 We have a new fancy schmancy Cobalt Strike container. Now we want to _use_ it. This is where we need to use the `docker run` command. 
 
@@ -238,7 +238,7 @@ docker run -it -p "50050:50050/tcp" -p "443:443/tcp" -p "80:80/tcp" -p "53:53/ud
 
 From here, we now have a full Cobalt Strike container listening on all interfaces of your host operating system! 
 
-### Using the Container (with a Malleable C2 Profile)
+## Using the Container (with a Malleable C2 Profile)
 
 All of that was super cool, right? But wait a minute... what the hell do I do if I want to use a Malleable C2 profile with the container? This is where bind mounts come into play. We need to tell the container to mount to the host operating system to allow the container to access files on the host. Keep in mind, doing so _may have security implications_. Make sure you understand those implications before doing this with all of your containers.
 
