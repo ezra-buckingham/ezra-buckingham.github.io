@@ -248,15 +248,15 @@ With that, you have everything you now need to build and run your very own Cobal
 
 After building the image, we can run the container with the bind mount.
 
-![Running the Cobalt Strike container](blog-images/container-run.png)
+![Running the Cobalt Strike container](../../blog-images/container-run.png)
 
 And we see the container has booted properly, now we can use the host operating system's IP address to connect to the container.
 
-![Connecting to the Cobalt Strike container](blog-images/connecting-to-cobaltstrike.png)
+![Connecting to the Cobalt Strike container](../../blog-images/connecting-to-cobaltstrike.png)
 
 And if we hit connect, we become connected to our containerized version of Cobalt Strike!
 
-![Connected to the Cobalt Strike container](blog-images/connected-to-cobaltstrike.png)
+![Connected to the Cobalt Strike container](../../blog-images/connected-to-cobaltstrike.png)
 
 # What's Next?
 
