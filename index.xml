@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Ezra Buckingham</title>
-    <link>https://ezrabuckingham.com/</link>
+    <link>https://ezra-buckingham.github.io/</link>
     <description>Recent content on Ezra Buckingham</description>
     <image>
-      <url>https://ezrabuckingham.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://ezrabuckingham.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://ezra-buckingham.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 18 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezrabuckingham.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezra-buckingham.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Welcome to the Blog!</title>
-      <link>https://ezrabuckingham.com/blog/welcome-to-the-blog/</link>
+      <link>https://ezra-buckingham.github.io/blog/welcome-to-the-blog/</link>
       <pubDate>Thu, 18 Aug 2022 08:57:43 -0400</pubDate>
       
-      <guid>https://ezrabuckingham.com/blog/welcome-to-the-blog/</guid>
+      <guid>https://ezra-buckingham.github.io/blog/welcome-to-the-blog/</guid>
       <description>Out of demand, I have decided to create my own blog where I post about all the research I do!</description>
     </item>
     
     <item>
       <title>About Me</title>
-      <link>https://ezrabuckingham.com/about-me/</link>
+      <link>https://ezra-buckingham.github.io/about-me/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ezrabuckingham.com/about-me/</guid>
+      <guid>https://ezra-buckingham.github.io/about-me/</guid>
       <description>A little bit about Ezra Buckingham</description>
     </item>
     
