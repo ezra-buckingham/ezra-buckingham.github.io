@@ -1,3 +1,16 @@
 :root {
     --main-width: 840px !important;
+    --ezra-accent: rgb(30, 100, 140);
+}
+
+#menu .active {
+    border-bottom: 2px solid var(--ezra-accent) !important;
+}
+
+.share-buttons {
+    background-color: var(--ezra-accent) !important;
+}
+
+.button {
+    background: var(--ezra-accent) !important;
 }
