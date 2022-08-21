@@ -9,6 +9,12 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # is necessary
+
 minify:
   disableXML: true
   minifyOutput: true
