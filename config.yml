@@ -3,6 +3,7 @@ title: Ezra Buckingham
 paginate: 5
 theme: PaperMod
 
+googleAnalytics: G-W331QM25YY
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
@@ -99,6 +100,7 @@ menu:
   main:
     - identifier: blog
       name: blog
+      title: Blog Posts
       url: /blog/
       weight: 10
     - identifier: search
