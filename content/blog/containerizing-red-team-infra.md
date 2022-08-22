@@ -2,7 +2,7 @@
 title: "DevAttackOps: Containerizing Red Team Infrastructure (Part 1)"
 date: 2022-08-19T08:57:43-04:00
 draft: false
-description: "Containerizing Attack and C2 infrastructure"
+description: "Containerizing Attack and C2 infrastructure and if else == True"
 keywords: ["red-team", "infrastructure", "docker", "containers", "devattackops"]
 tags: ["red-team", "infrastructure", "docker", "containers", "devattackops"]
 cover:
