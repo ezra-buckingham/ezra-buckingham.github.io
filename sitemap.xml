@@ -3,30 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ezrabuckingham.com/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/blog/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/tags/containers/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/tags/devattackops/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
-    <loc>https://ezrabuckingham.com/blog/containerizing-red-team-infra/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <loc>https://ezrabuckingham.com/blog/containers-ci_cd/</loc>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/tags/docker/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
+  </url><url>
+    <loc>https://ezrabuckingham.com/tags/gitlab/</loc>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/tags/infrastructure/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/tags/red-team/</loc>
-    <lastmod>2022-08-19T08:57:43-04:00</lastmod>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/tags/</loc>
+    <lastmod>2022-08-29T16:37:55-04:00</lastmod>
+  </url><url>
+    <loc>https://ezrabuckingham.com/blog/containerizing-red-team-infra/</loc>
     <lastmod>2022-08-19T08:57:43-04:00</lastmod>
   </url><url>
     <loc>https://ezrabuckingham.com/blog/welcome-to-the-blog/</loc>

@@ -9,11 +9,11 @@
       <link>https://ezrabuckingham.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 08:57:43 -0400</lastBuildDate><atom:link href="https://ezrabuckingham.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 Aug 2022 16:37:55 -0400</lastBuildDate><atom:link href="https://ezrabuckingham.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>containers</title>
       <link>https://ezrabuckingham.com/tags/containers/</link>
-      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      <pubDate>Mon, 29 Aug 2022 16:37:55 -0400</pubDate>
       
       <guid>https://ezrabuckingham.com/tags/containers/</guid>
       <description></description>
@@ -22,7 +22,7 @@
     <item>
       <title>devattackops</title>
       <link>https://ezrabuckingham.com/tags/devattackops/</link>
-      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      <pubDate>Mon, 29 Aug 2022 16:37:55 -0400</pubDate>
       
       <guid>https://ezrabuckingham.com/tags/devattackops/</guid>
       <description></description>
@@ -31,16 +31,25 @@
     <item>
       <title>docker</title>
       <link>https://ezrabuckingham.com/tags/docker/</link>
-      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      <pubDate>Mon, 29 Aug 2022 16:37:55 -0400</pubDate>
       
       <guid>https://ezrabuckingham.com/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>gitlab</title>
+      <link>https://ezrabuckingham.com/tags/gitlab/</link>
+      <pubDate>Mon, 29 Aug 2022 16:37:55 -0400</pubDate>
+      
+      <guid>https://ezrabuckingham.com/tags/gitlab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>infrastructure</title>
       <link>https://ezrabuckingham.com/tags/infrastructure/</link>
-      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      <pubDate>Mon, 29 Aug 2022 16:37:55 -0400</pubDate>
       
       <guid>https://ezrabuckingham.com/tags/infrastructure/</guid>
       <description></description>
@@ -49,7 +58,7 @@
     <item>
       <title>red-team</title>
       <link>https://ezrabuckingham.com/tags/red-team/</link>
-      <pubDate>Fri, 19 Aug 2022 08:57:43 -0400</pubDate>
+      <pubDate>Mon, 29 Aug 2022 16:37:55 -0400</pubDate>
       
       <guid>https://ezrabuckingham.com/tags/red-team/</guid>
       <description></description>
