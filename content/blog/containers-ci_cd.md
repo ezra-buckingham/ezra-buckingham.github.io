@@ -67,11 +67,11 @@ touch Dockerfile
 
 Using your favorite IDE or text editor, you can now edit that `Dockerfile` you just created to hold the same `Dockerfile` you use to build Cobalt Strike. And that's really all you need to do! We will add more containers in a bit.
 
-## Creating the Pipeline & Building the Image
+## Creating a Basic Pipeline
 
 Since we are using GitLab to handle the pipeline, all we need to do to enable the repository to integrate with the GitLab CI/CD is add a `.gitlab-ci.yml` file in the root of our repository (as per the [GitLab documentation](https://docs.gitlab.com/ee/ci/yaml/gitlab_ci_yaml.html)). The `.gitlab-ci.yml` file is going to be our workhorse: it will hold all the build and deploy commands for our container images. 
 
-When you look at some of the examples on the web of how to structure the `.gitlab-ci.yml` file, it can get really confusing and scary quickly. However, the one thing to remember is that this file is just a fancy way to run shell commands on a computer. With that, let's look at a simple example of the base `.gitlab-ci.yml` file we will use for our repository!
+When you look at some of the examples on the web of how to structure the `.gitlab-ci.yml` file, it can get really confusing and scary quickly. However, the one thing to remember is that this file is just a fancy way to run shell commands on a computer that GitLab will spin up whenever you commit to your repository (or when you manually kick off the build). With that, let's look at a simple example of the base `.gitlab-ci.yml` file we will use for our repository!
 
 ```yaml
 build:
@@ -85,9 +85,85 @@ build:
     - echo "During"
 ```
 
-In this configuration, we are telling GitLab exactly how to run the "build" stage of our pipeline (which is the default stage). Within that "build" stage, we are telling GitLab to use the `docker:19.03.12` base container image (yes container-ception, we are using a container to build our containers). You will also see that we are using a "service" called `docker:19.03.12-dind` which now tells GitLab that we want to use the Docker-in-Docker image to execute all of our commands. 
+In this configuration, we are telling GitLab exactly how to run the "build" stage of our pipeline (which is the default stage). Within that "build" stage, we are telling GitLab to use the `docker:19.03.12` base container image (yes container-ception, we are using a container to build our containers). You will also see that we are using a "service" called `docker:19.03.12-dind` which now tells GitLab that we want to use the Docker-in-Docker image to execute the container-building commands. Think of the `services` definition as the "tools" we need to successfully run our commands. On a traditional server, in order for us to build containers, we would need to install Docker onto that system. However, with GitLab's pipeline, we can just use another container (with all required tools we need already installed on it) to run each command. If we then commit that file up to GitLab, we see that the job will pull back that container image and run our commands.
 
+{{< figure align=center src="../../blog-images/test-cicd-build.png" >}}
 
+> I realize that may have lost you, so if you want to check out [GitLab's documentation](https://docs.gitlab.com/ee/ci/services/) to fully understand their concept of "services", they do a great job explaining the technical details.
+
+## Understanding the Container Registry
+
+Sweet so now we are using GitLab's CI/CD to execute commands whenever we make changes to the repository. Now we want to make it do something useful, like build our Cobalt Strike container. Since we already know the command to build the container, we can use that as the starting point. However, since we are going to be deploying the container image up to GitLab's container registry, we need to understand how it works. In looking at the [GitLab Container Registry documentation](https://docs.gitlab.com/ee/user/packages/container_registry/), it seems like a standard registry. Only caveat here is that in order to use the registry, we need to use a "personal access token" to sign into the registry before we can push up to it. Before trying to use all these new tools _together_ its important to understand one at a time. 
+
+To start using the registry, we need to generate a personal access token. You can do this by going to your user preferences, selecting "Access Tokens" and generating a new token with the scopes `write_registry` and `read_registry`.
+
+{{< figure align=center src="../../blog-images/generate-pat-gitlab.png" >}}
+
+Once you hit create, you should get a token that starts with `glpat-` of which will now allow you to login to the GitLab registry using the docker CLI.
+
+```bash
+docker login -u ezra-buckingham -p glpat-<...redacted...> registry.gitlab.com
+```
+
+Now, we can use that Cobalt Strike Dockerfile we created in the `cobaltstrike` folder earlier, build it with a tag that points to our new repository called `container-ci_cd`, and push it up to that repository's registry (note that `ezragit` refers to my gitlab organization and `container_ci-cd` refers to the repository that will be my registry).
+
+```bash
+docker build -t registry.gitlab.com/ezragit/container-ci_cd/cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE ./cobaltstrike
+docker push registry.gitlab.com/ezragit/container-ci_cd/cobaltstrike:latest
+```
+
+After running those commands, we can see the Cobalt Strike container in our GitLab registry.
+
+{{< figure align=center src="../../blog-images/container-in-registry.png" >}}
+
+Now to use that container image, any user that has access to that repository can create their own "personal access token" with the `registry_read` scope and can use the same docker login CLI command to login to registry.gitlab.com and then pull down the container image.
+
+```bash
+docker run registry.gitlab.com/ezragit/container-ci_cd/cobaltstrike:latest
+```
+
+## Using the Pipeline to Build and Push the Image
+
+We now have an understanding of the registry and a basic implementation of the CI/CD pipeline. Now, let's combine the two. If we take our `.gitlab-ci.yml` file and copy the commands we just ran into it, everything would work right? Well not exactly... Since the Cobalt Strike container takes in a `build-arg`, we need to somehow pass that into the CI/CD job. This is where GitLab CI/CD variables come into play. Inside the CI/CD settings of your repository, you can store secrets like the `COBALTSTRIKE_LICENSE` and pull them into the job.
+
+{{< figure align=center src="../../blog-images/add-cicd-variable.png" >}}
+
+However, to pull that secret into the job, you must explicitly put that variable into the `variables` block so that it can be passed into the build commands.
+
+```yaml
+build:
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  variables:
+    COBALTSTRIKE_LICENSE: $COBALTSTRIKE_LICENSE
+  script:
+    - docker build -t registry.gitlab.com/ezragit/container-ci_cd/cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE ./cobaltstrike
+    - docker push registry.gitlab.com/ezragit/container-ci_cd/cobaltstrike:latest
+```
+
+Now that we have this, we can commit and push these changes to try out our fancy new build command. But just this isn't enough, if we push this and see the results, we get an access forbidden when we try to push the image. 
+
+{{< figure align=center src="../../blog-images/cicd-failed-push.png" >}}
+
+This is because we need to authenticate to the registry. What's cool is that we don't need to generate any credentials, we can use the `secrets` embedded in the runner to dynamically authenticate to the registry (depending on what user made the change). We can do this using the `CI_REGISTRY_USER` and `CI_REGISTRY_PASSWORD` secrets in a docker login command. However, while we are at it, we should also remove some of the hardcoded values too. We can also leverage the `CI_REGISTRY` to dynamically point to the registry and even create a new variable with the full path to our registry and then reference that in the docker build and push.
+
+```yaml
+build:
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  variables:
+    CI_REGISTRY_PATH: $CI_REGISTRY/ezragit/container-ci_cd
+    COBALTSTRIKE_LICENSE: $COBALTSTRIKE_LICENSE
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY_PATH/cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE ./cobaltstrike
+    - docker push $CI_REGISTRY_PATH/cobaltstrike:latest
+```
 
 
 
