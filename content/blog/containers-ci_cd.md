@@ -39,7 +39,7 @@ Using a CI/CD pipeline means you have control over _how you build_ and _where yo
 
 ## Reduce Complexity
 
-As a Red Teamer, I already have a lot I have to learn and remember. The last thing I want to remember is how to install a specific software on a server (leave that up to the sysadmins of the world, you all are the real heroes). In using a CI/CD pipeline, I can use my single source of truth for building all my software and "automate away the minutiae" of infrastructure work so I can focus on the value-add activities of my job
+As a Red Teamer, I already have a lot I have to learn and remember. The last thing I want to remember is how to install a specific software on a server (leave that up to the sysadmins of the world, you all are the real heroes). In using a CI/CD pipeline, I can use my single source of truth for building all my software and "automate away the minutiae" of infrastructure work so I can focus on the value-add activities of my job.
 
 
 # Building the Pipeline
@@ -165,23 +165,39 @@ build:
     - docker push $CI_REGISTRY_PATH/cobaltstrike:latest
 ```
 
+And when we push these changes, we can see the job completes successfully and automatically builds and deploys our image to our private registry!
 
+{{< figure align=center src="../../blog-images/test-cicd-container-build.png" >}}
 
+# Expanding the Capabilities
 
+Now that we have a way to automate this, what if we wanted to add another image to our registry? It's easy! Let's build Sliver into our registry. First, we need a new folder for sliver so we can hold our Dockerfile.
 
+```bash
+mkdir sliver
+touch Dockerfile
+```
 
+We can (using skills learned in Part 1) build out that Dockerfile to build our Sliver container image.
 
+```Dockerfile
+FROM debian:stable-slim
 
-you need to create a new Git repository to hold all of your `Dockerfile`s and any custom configuration files for each container. To do this, you can use the GitLab GUI and then clone down the repository you create.
+RUN apt-get update \
+    && apt-get -y install git wget zip tar file mingw-w64
 
-Continuing with CobaltStrike as our example, we 
+WORKDIR /opt/sliver
 
+RUN wget https://github.com/BishopFox/sliver/releases/download/v1.5.16/sliver-server_linux \
+    && mv sliver-server_linux sliver-server \
+    && chmod +x ./sliver-server
 
+WORKDIR /opt/sliver
+EXPOSE 3333 443 80 53/udp
+ENTRYPOINT [ "./sliver-server" ]
+```
 
-One of the most important parts of a good CI/CD pipeline is organization of code. When you are building out all your images and pushing
-
-
-## Attempt #1 
+Then we can add the commands needed to build and push the image directly into our `.gitlab-ci.yml` file.
 
 ```yaml
 build:
@@ -201,7 +217,62 @@ build:
     - docker push $CI_REGISTRY_PATH/sliver:latest
 ```
 
-## Attempt #2
+And yes, it is that easy to build your own CI/CD pipeline to build and deploy container images to a private container registry.
+
+## The Problems with the Solution
+
+We have an awesome start to what is becoming a badass CI/CD pipeline, but we can do better. There are 2 big problems with what we have come up with: failure tracing and speed (There are more, but topic for another time as it gets deeper into the weeds).
+
+### Failure Tracing
+
+In our current solution, if any of the builds or pushes fail, the rest of the pipeline fails. This makes it difficult to track down which container image failed to build and what that failure was.
+
+### Speed
+
+Since all of our commands run in sequence, each build needs to wait until the previous one finishes to start building. 
+
+## Improving the Solution
+
+We can alleviate both of those problems by splitting out each container build into their own build step, but tie them both into the parent "build" step. Using some YAML magic, we can create an anchor and then reference that anchor in each build so that there is a "global" job configuration for each build (if you want to learn more about YAML anchors, here's a great [blog post](https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd) on them).
+
+```yaml
+image: docker:19.03.12
+
+stages:
+  - build 
+
+# Global Job Config for all container builds (include build arg variables here)
+.job_configuration_template: &job_configuration
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  variables:
+    CI_REGISTRY_PATH: $CI_REGISTRY/ezragit/container-ci_cd
+    COBALTSTRIKE_LICENSE: $COBALTSTRIKE_LICENSE
+  before_script: 
+   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+# Actual Builds
+build_cobaltstrike:
+  <<: *job_configuration
+  script:
+    - docker build -t $CI_REGISTRY_PATH/cobaltstrike:latest --build-arg COBALTSTRIKE_LICENSE=$COBALTSTRIKE_LICENSE ./cobaltstrike
+    - docker push $CI_REGISTRY_PATH/cobaltstrike:latest
+
+build_sliver:
+  <<: *job_configuration
+  script:
+    - docker build -t $CI_REGISTRY_PATH/sliver:latest ./sliver
+    - docker push $CI_REGISTRY_PATH/sliver:latest
+```
+
+With this new and improved CI/CD configuration, when we push to this repository, we will see logically each container build split out and can see which is the "trouble child" if the entire pipeline fails. Not to mention, now all the containers can be built in parallel. This means that all images are built at the same time.
+
+{{< figure align=center src="../../blog-images/cicd-parallel-builds.png" >}}
+
+# Artifacts
+
+Here is the `.gitlab-ci.yml` file used to build all the containers.
 
 ```yaml
 image: docker:19.03.12
@@ -234,5 +305,3 @@ build_sliver:
     - docker push $CI_REGISTRY_PATH/sliver:latest
 
 ```
-
-# Artifacts
