@@ -1,5 +1,5 @@
 ---
-title: "DevAttackOps: Container CI/CD Pipelines"
+title: "DevAttackOps: Container CI/CD Pipelines (Part 2)"
 date: 2022-08-29T16:37:55-04:00
 draft: false
 description: "Build your containers in CI/CD Pipelines"
