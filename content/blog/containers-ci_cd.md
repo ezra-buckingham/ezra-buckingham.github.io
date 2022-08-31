@@ -27,7 +27,7 @@ If you work in IT in any capacity, you have heard the term "DevOps" or "Continuo
 
 # Why Build a CI/CD Pipeline?
 
-If you are reading this, you clearly want to learn and do not want to be that junior engineer who loves putting buzzwords on their resume without actually understanding the concepts and technology behind them. Speaking of which, I should probably remove BlockChain from mine, but I digress. Let me convince you _why_ you should care. In my mind, the reasons why you should care are the same as in [DevAttackOps Part 1](../containerizing-red-team-infra): repeatability and ease of use. However, I will add one more here: reducing complexity.
+If you are reading this, you clearly want to learn and do not want to be that junior engineer who loves putting buzzwords on their resume without actually understanding the concepts and technology behind them. Speaking of which, I should probably remove Blockchain from mine, but I digress. Let me convince you _why_ you should care. In my mind, the reasons why you should care are the same as in [DevAttackOps Part 1](../containerizing-red-team-infra): repeatability and ease of use. However, I will add one more here: reducing complexity.
 
 ## Repeatability
 
@@ -44,7 +44,7 @@ As a Red Teamer, I already have a lot I have to learn and remember. The last thi
 
 # Building the Pipeline
 
-As we go through building out this CI/CD pipeline, I want to remind you that _this is not the only solution_. There are may different ways to skin the cat (sorry I hate that phrase too). I want to provide a tangible example for you to try this on your own. In doing so, I will walk you through how you build out a CI/CD pipeline using a GitLab repository as the source and GitLab container registry as the container registry. Both are **FREE**, so you have no excuses to not build this yourself. However, you can just as easily acomplish the same goal using GitHub Actions and a container registry like Amazon Elastic Container Registry (ECR). Notice my theme of abstracting away the "use case" from the platform, this will come up way more often in the future.
+As we go through building out this CI/CD pipeline, I want to remind you that _this is not the only solution_. There are many different ways to skin the cat (sorry I hate that phrase too). I want to provide a tangible example for you to try this on your own. In doing so, I will walk you through how you build out a CI/CD pipeline using a GitLab repository as the source and GitLab container registry as the container registry. Both are **FREE**, so you have no excuses to not build this yourself. However, you can just as easily accomplish the same goal using GitHub Actions and a container registry like Amazon Elastic Container Registry (ECR). Notice my theme of abstracting away the "use case" from the platform, this will come up way more often in the future.
 
 ## Creating the Repository
 
@@ -171,7 +171,7 @@ When we push these changes, we can see the job completes successfully and automa
 
 # Expanding Capabilities
 
-Now that we have a way to automate this, what if we wanted to add another image to our registry? It's easy! Let's build Sliver into our registry. First, we need a new folder for sliver so we can hold our `Dockerfile`.
+Now that we have a way to automate this, what if we wanted to add another image to our registry? It's easy! Let's build Sliver into our registry. First, we need a new folder for Sliver that will hold our `Dockerfile`.
 
 ```bash
 mkdir sliver
@@ -184,7 +184,7 @@ We can (using skills learned in Part 1) build out that `Dockerfile` to build our
 FROM debian:stable-slim
 
 RUN apt-get update \
-    && apt-get -y install git wget zip tar file mingw-w64
+    && apt-get -y install file git mingw-w64 tar wget zip
 
 WORKDIR /opt/sliver
 
@@ -193,7 +193,7 @@ RUN wget https://github.com/BishopFox/sliver/releases/download/v1.5.16/sliver-se
     && chmod +x ./sliver-server
 
 WORKDIR /opt/sliver
-EXPOSE 3333 443 80 53/udp
+EXPOSE 80 443 3333 53/udp
 ENTRYPOINT [ "./sliver-server" ]
 ```
 
@@ -217,15 +217,15 @@ build:
     - docker push $CI_REGISTRY_PATH/sliver:latest
 ```
 
-And yes, it is that easy to build your own CI/CD pipeline to build and deploy container images to a private container registry.
+It is that easy to create your own CI/CD pipeline to build and deploy container images to a private container registry.
 
 ## The Problems with the Solution
 
-We have an awesome start to what is becoming a badass little CI/CD pipeline, but we can do better. There are 2 big problems with what we have come up with: failure tracing and speed (there are more, but topic for another time as it gets deeper into the weeds).
+We have an awesome start to what is becoming a badass little CI/CD pipeline, but we can do better. There are two big problems with what we have come up with: failure tracing and speed. There are more, but that is a topic for another time as it gets deeper into the weeds.
 
 ### Failure Tracing
 
-In our current solution, if any of the builds or pushes fail, the rest of the pipeline fails. This makes it difficult to track down which container image failed to build and what that failure was.
+In our current solution, if any of the builds or pushes fail, the rest of the pipeline fails. This makes it difficult to track down which container image failed to build and what that failure actually was.
 
 ### Speed
 
@@ -233,7 +233,7 @@ Since all of our commands run in sequence, each build needs to wait until the pr
 
 ## Improving the Solution
 
-We can alleviate both of those problems by splitting out each container build into their own build step, but tie them both into the parent "build" step. We can do this, by defining the parent "build" step inside of the `stages` list and then use the `stage` key in each container build to be set to "build". Since some of that results in a duplication of code (which if you ask me, one of the world's biggest problems is code duplication), we can use anchors and aliases. If you are unfamiliar with anchors and aliases in YAML, you should learn more about them in this [blog post](https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd). For our CI/CD configuration, we can create an anchor for a "global" configuration and then reference that anchor as an alias in each build.
+We can alleviate both of those problems by splitting out each container build into their own build step, but tie them both into the parent "build" step. We can do this by defining the parent "build" step inside of the `stages` list and then use the `stage` key in each container build to be set to "build". Since some of those results in a duplication of code (which if you ask me, one of the world's biggest problems is code duplication), we can use anchors and aliases. If you are unfamiliar with anchors and aliases in YAML, you can learn more about them in this [blog post](https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd). For our CI/CD configuration, we can create an anchor for a "global" configuration and then reference that anchor as an alias in each build.
 
 ```yaml
 image: docker:19.03.12
@@ -266,15 +266,15 @@ build_sliver:
     - docker push $CI_REGISTRY_PATH/sliver:latest
 ```
 
-With this new and improved CI/CD configuration, when we push to this repository, we will see logically each container build split out into it's own "job". This allows us to see who the "trouble child" is if the pipeline fails. Not to mention, now all the containers can be built in parallel (which since we are on the free tier of GitLab, this means we can keep tinkering with CI/CD without paying for the next tier). 
+With this new and improved CI/CD configuration, when we push to this repository, we will see logically each container build split out into its own "job". This allows us to see who the "trouble child" is if the pipeline fails. Not to mention, now all the containers can be built in parallel. Since we are on the free tier of GitLab, this means we can keep tinkering with CI/CD without paying for the next tier.
 
 {{< figure align=center src="../../blog-images/cicd-parallel-builds.png" >}}
 
-And that's it! You now have your own CI/CD pipeline for your container images. Now that we have a centralized place for all our containers, we can deploy them wherever we would like... I wonder how we might do that in an easy way... stay tuned.
+And that is it! You now have your own CI/CD pipeline for your container images. Now that we have a centralized place for all our containers, we can deploy them wherever we like. I wonder how we might do that in an easier way? Stay tuned...
 
 # Artifacts
 
-Here is the `.gitlab-ci.yml` file I use to build all my containers (to add more, I just copy and past the build config and change a few of the values).
+Here is the `.gitlab-ci.yml` file I use to build all my containers. To add more, I just copy and paste the build config and change a few of the values.
 
 ```yaml
 image: docker:19.03.12
