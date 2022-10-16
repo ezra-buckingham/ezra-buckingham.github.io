@@ -21,7 +21,11 @@ To create a new post, you can use the following command:
 hugo new blog/test.md
 ```
 
-Note: I use 20 x 5 aspect ratio for picutres. This can be done in Photos.
+Note: I use 20 x 5 aspect ratio for pictures. This can be done in Photos.
+
+## Comments
+
+Comments use an external third-party. I have no idea what I am doing.
 
 ## Acknowledgements
 
