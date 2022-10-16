@@ -273,7 +273,7 @@ Now, in the same directory as our new `docker-compose.yml` file, we can use the 
 
 {{< figure width="450" height="auto" align=center src="../../blog-images/start-cs-sliver-docker-compose.png" >}}
 
-We can confirm that the containers are up by running `docker conatiner ls`.
+We can confirm that the containers are up by running `docker container ls`.
 
 {{< figure align=center src="../../blog-images/show-running-cs-sliver.png" >}}
 
