@@ -2,7 +2,7 @@
 title: "DevAttackOps: Deploying Containers with Docker Compose (Part 3)"
 date: 2022-10-16T16:14:53-04:00
 draft: false
-description: "Deploy dynamic containers using Docker Compose and Ansible"
+description: "Deploy dynamic containers using Docker Compose"
 keywords: ["red-team", "infrastructure", "docker", "containers", "devattackops", "docker-compose"]
 tags: ["red-team", "infrastructure", "docker", "containers", "devattackops", "docker-compose"]
 cover:
