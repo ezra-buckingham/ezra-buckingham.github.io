@@ -134,7 +134,7 @@ Now, in the same directory as our new `docker-compose.yml` file, we can use the 
 
 {{< figure width="450" height="auto" align=center src="../../blog-images/start-sliver-docker-compose.png" >}}
 
-We can confirm that the container is up by running `docker conatiner ls`.
+We can confirm that the container is up by running `docker container ls`.
 
 {{< figure align=center src="../../blog-images/show-running-sliver.png" >}}
 
